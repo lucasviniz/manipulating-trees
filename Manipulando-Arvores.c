@@ -56,6 +56,30 @@ No* inserir(No *raiz, int num){
 	}
 }
 
+void imprimirPreOrdem(No *raiz){
+	if(raiz!=NULL){
+		printf("%d ", raiz->valor);
+		imprimirPreOrdem(raiz->esquerda);
+		imprimirPreOrdem(raiz->direita);
+	}
+}
+
+void imprimirEmOrdem(No *raiz){
+	if(raiz!=NULL){
+		imprimirEmOrdem(raiz->esquerda);
+		printf("%d ", raiz->valor);
+		imprimirEmOrdem(raiz->direita);
+	}
+}
+
+void imprimirPosOrdem(No *raiz){
+    if(raiz != NULL){
+        imprimirPosOrdem(raiz->esquerda);
+        imprimirPosOrdem(raiz->direita);
+        printf("%d ", raiz->valor);
+    }
+}
+
 No* esvaziarArvore(No *raiz){
 	if (raiz != NULL){	
 		esvaziarArvore(raiz->esquerda);
