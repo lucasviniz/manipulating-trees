@@ -56,6 +56,20 @@ No* inserir(No *raiz, int num){
 	}
 }
 
+int altura(No *raiz){
+	if(raiz == NULL){
+		return -1;
+	}else{
+		int esq = altura(raiz->esquerda);
+		int dir = altura(raiz->direita);
+		if(esq > dir){
+			return esq + 1;
+		}else{
+			return dir + 1;
+		}
+	}
+}
+
 void imprimirPreOrdem(No *raiz){
 	if(raiz!=NULL){
 		printf("%d ", raiz->valor);
@@ -80,6 +94,15 @@ void imprimirPosOrdem(No *raiz){
     }
 }
 
+void imprimirNivel(No *raiz, int nivel){
+	if(raiz != NULL){
+        imprimirNivel(raiz->esquerda, nivel+1);
+        printf("%d(%d) ", raiz->valor, nivel);
+        imprimirNivel(raiz->direita, nivel+1);
+        
+    }
+}
+
 No* esvaziarArvore(No *raiz){
 	if (raiz != NULL){	
 		esvaziarArvore(raiz->esquerda);
@@ -87,4 +110,72 @@ No* esvaziarArvore(No *raiz){
 		free(raiz);
 		return raiz = NULL;
 	}
+}
+
+int main(){
+	No *raiz = NULL;
+	int opcao, valor, repeat = 1;
+	
+	do{
+		opcao = menu();
+		switch(opcao){
+			case 1:
+				if(repeat == 1){
+					criarArvore(raiz);
+					repeat = 0;
+				}else{
+					printf("Arvore ja foi criada\n");
+				}
+				system("pause");
+				system("cls");
+				break;
+			case 2:
+				printf("\n\tDigite um valor: ");
+				scanf("%d", &valor);
+				
+				raiz = inserir(raiz, valor);
+				
+				system("cls");
+				break;
+			case 3:
+				printf("\n\tARVORE PRE-ORDEM:\n\t");
+				imprimirPreOrdem(raiz);
+				printf("\n");
+				printf("\n\tARVORE EM-ORDEM:\n\t");
+				imprimirEmOrdem(raiz);
+				printf("\n");
+				printf("\n\tARVORE POS-ORDEM:\n\t");
+				imprimirPosOrdem(raiz);
+				printf("\n");
+				system("pause");
+				system("cls");
+				break;
+			case 4:
+				printf("\n\tAltura da arvore: %d\n\n", altura(raiz));
+				system("pause");
+				system("cls");
+				break;
+			case 5:
+				raiz = esvaziarArvore(raiz);
+				printf("ARVORE ESVAZIADA\n");
+				system("pause");
+				system("cls");
+				break;
+			case 6:
+				printf("\n\tARVORE PRE-ORDEM:\n\t");
+				imprimirNivel(raiz, raiz->nivel);
+				printf("\n");
+				system("pause");
+				system("cls");
+			default:
+				if(opcao != 0){
+					printf("\n\tOpcao invalida!!!\n");
+					system("cls");
+				}
+		}
+	}while(opcao!=0);
+	
+	raiz = inserir(raiz, 50);
+	
+	return 0;
 }
